@@ -4,7 +4,7 @@ export default function Header(){
         <header>
             <nav className="header-nav">
                 <Link href="/">
-                    <h2>G4</h2>
+                    <h2>MyTrello</h2>
                 </Link>
                 <div className="header-nav-menu">
                     <Link href="/perfil">Meus Quadros</Link>

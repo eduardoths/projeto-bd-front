@@ -1,13 +1,13 @@
 import '../styles/globals.css'
 import Head from 'next/head'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Grupo 4 - Gerenciador</title>
+        <title>MyTrello - Grupo 4</title>
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <Header />

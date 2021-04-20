@@ -11,8 +11,8 @@ function MenuLinks({user, setUser}) {
     else {
         return (
             <>
+                <Link href="/">Home</Link>
                 <Link href="/dashboard">Meu Dashboard</Link>
-                <Link href="/Quadros">Meus Quadros</Link>
                 <Link href="/"><a onClick={handleExit}>Log out</a></Link>
             </>
         )

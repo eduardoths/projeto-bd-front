@@ -34,9 +34,6 @@ function Dashboard({data, loading}) {
                     }
                 </div>
                 <div className="dashboard-boards">
-                    <div className="dashboard-section-title">
-                        <p>Meus quadros</p>
-                    </div>
                     {
                         (() => {
                             if (loading){
@@ -46,7 +43,7 @@ function Dashboard({data, loading}) {
                                     </div>
                                 )
                             } else {
-                                let teams = Array(data.equipes.length).fill(null)
+                                let teams = Array(data.equipes.length+ 1).fill(null)
                                 for (let i=0; i < data.equipes.length; i++) {
                                     const boards_arr = Array(data.equipes[i].quadros.length).fill(null)
                                     for (let j=0; j < boards_arr.length; j++) {
@@ -54,11 +51,22 @@ function Dashboard({data, loading}) {
                                         boards_arr[j] = <Board key={`board-${i}-${j}`}name={quadro.nome} id={quadro.id}/>
                                     }
                                     teams[i] = <Team name={data.equipes[i].nome}>{boards_arr}</Team> 
+                                    console.log(i)
                                 }
+                                const i = data.equipes.length
+                                const boards_arr = Array(data.quadros.length).fill(null)
+                                for (let j=0; j < boards_arr.length; j++) {
+                                    const quadro = data.quadros[j]
+                                    boards_arr[j] = <Board key={`board-${i}-${j}`}name={quadro.nome} id={quadro.id}/>
+                                }
+                                teams[i] = <Team name={"Seus Quadros"}>{boards_arr}</Team>
                                 return (<>{teams}</>)
                             }
                         })()
                     }
+                    <div className="dashboard-section-title">
+                        <p>Meus quadros</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,7 +77,7 @@ export default function DashboardFetch({user, setUser}) {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState()
     if (user !== undefined) {
-        const carregar_dados = async () => {
+        const load_data = async () => {
             const url = "https://pcs3623-mytrello-api.herokuapp.com/dashboard/"
             fetch(url, {
                 method: 'GET',
@@ -89,7 +97,7 @@ export default function DashboardFetch({user, setUser}) {
             })
         }
         useEffect(() => {
-            carregar_dados()
+            load_data()
         }, [])
         return (
             <Dashboard data={data} loading={loading}/>

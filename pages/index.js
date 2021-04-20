@@ -26,7 +26,15 @@ export default function Home({user, setUser}) {
         else
           cookie = Cookies.set("user", data["token"], {sameSite: 'lax'})
         setUser(cookie)
-        
+
+        fetch("https://pcs3623-mytrello-api.herokuapp.com/dashboard/", {
+            method: 'GET',
+            headers: new Headers({
+                Authorization: 'JWT ' + user
+            })
+        })
+        .then(r => {return;})
+        .catch(e => {return;})
       })
     })
     .catch(error => {

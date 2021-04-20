@@ -1,6 +1,8 @@
 import Cookies from 'js-cookie'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import Team from '../components/team'
+import Board from '../components/board'
 
 function Dashboard({data, loading}) {
     return (
@@ -18,6 +20,15 @@ function Dashboard({data, loading}) {
                                         <img src="loading.svg"/>
                                     </div>
                                 )
+                            } else {
+                                let teams = Array(data.equipes.length).fill(null)
+                                for (let i=0; i < data.equipes.length; i++) 
+                                    teams[i] = <Team name={data.equipes[i].nome}/>
+                                return (
+                                    <>
+                                        {teams}
+                                    </>
+                                )
                             }
                         })()
                     }
@@ -34,6 +45,17 @@ function Dashboard({data, loading}) {
                                         <img src="loading.svg"/>
                                     </div>
                                 )
+                            } else {
+                                let teams = Array(data.equipes.length).fill(null)
+                                for (let i=0; i < data.equipes.length; i++) {
+                                    const boards_arr = Array(data.equipes[i].quadros.length).fill(null)
+                                    for (let j=0; j < boards_arr.length; j++) {
+                                        const quadro = data.equipes[i].quadros[j]
+                                        boards_arr[j] = <Board key={`board-${i}-${j}`}name={quadro.nome} id={quadro.id}/>
+                                    }
+                                    teams[i] = <Team name={data.equipes[i].nome}>{boards_arr}</Team> 
+                                }
+                                return (<>{teams}</>)
                             }
                         })()
                     }
@@ -58,7 +80,6 @@ export default function DashboardFetch({user, setUser}) {
             .then(response => {
                 response.json()
                 .then(data => {
-                    console.log(data.quadros[0])
                     setData(data)
                     setLoading(false)
                 })
@@ -76,7 +97,7 @@ export default function DashboardFetch({user, setUser}) {
     }
     else {
         return (
-            <div className="dashboard">
+            <div className="container container-center flex-col">
                 <h1>Sem permissão!</h1>
                 <p>Você não está logado!</p>
                 <p>Clique <Link href="/"><span className="link">aqui</span></Link> para efetuar login</p>

@@ -65,6 +65,15 @@ footer {
   cursor: pointer;
 }
 
+.header-nav-menu > a {
+  padding: 0 10px 0 10px;
+  transition: color 1s;
+}
+
+.header-nav-menu > a:hover {
+  color: var(--color-signal);
+}
+
 .login {
   margin-top: var(--header-height);
   height: calc(100vh - var(--header-height));
@@ -117,6 +126,12 @@ footer {
   color: currentColor;
   background: transparent;
   border-radius: var(--size-radius);
+}
+
+.input__field:focus {
+  outline: none;
+  color: var(--color-signal);
+  border-color: var(--color-dark);
 }
 
 .button-group {

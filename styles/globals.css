@@ -76,13 +76,17 @@ footer {
   color: var(--color-signal);
 }
 
-.login, .welcome {
+.login, .welcome, .error {
   margin-top: var(--header-height);
   height: calc(100vh - var(--header-height));
   display: flex;
   align-items: center;
   justify-content: center;
   
+}
+
+.error {
+  flex-direction: column;
 }
 
 .login-form {
@@ -147,4 +151,10 @@ button {
   border: none;
   border-radius: var(--size-radius);
   font-weight: 900;
+  cursor: pointer;
+}
+
+.link {
+  color: var(--color-signal);
+  cursor: pointer;
 }

@@ -22,19 +22,10 @@ export default function Home({user, setUser}) {
       response.json().then(data => {
         let cookie
         if (remind)
-          cookie = Cookies.set("user", data["token"], {expires: 100000, sameSite: 'lax'})
+          Cookies.set("user", data["token"], {expires: 100000, sameSite: 'lax'})
         else
-          cookie = Cookies.set("user", data["token"], {sameSite: 'lax'})
-        setUser(cookie)
-
-        fetch("https://pcs3623-mytrello-api.herokuapp.com/dashboard/", {
-            method: 'GET',
-            headers: new Headers({
-                Authorization: 'JWT ' + user
-            })
-        })
-        .then(r => {return;})
-        .catch(e => {return;})
+          Cookies.set("user", data["token"], {sameSite: 'lax'})
+        setUser(Cookies.get("user"))
       })
     })
     .catch(error => {

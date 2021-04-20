@@ -4,8 +4,6 @@ function MenuLinks({user, setUser}) {
     const handleExit = () => {
         Cookies.remove('user')
         setUser(Cookies.get('user'))
-        if (window.location.pathname !== "/")
-            window.location.href = "/"
     } 
     if (user === undefined) {
         return <Link href="/">Home</Link>
@@ -15,7 +13,7 @@ function MenuLinks({user, setUser}) {
             <>
                 <Link href="/dashboard">Meu Dashboard</Link>
                 <Link href="/Quadros">Meus Quadros</Link>
-                <a onClick={handleExit}>Log out</a>
+                <Link href="/"><a onClick={handleExit}>Log out</a></Link>
             </>
         )
     }

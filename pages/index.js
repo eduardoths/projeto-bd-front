@@ -1,8 +1,7 @@
-import Head from 'next/head'
 import Cookies from 'js-cookie'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-export default function Home() {
+export default function Home({user, setUser}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [remind, setRemind] = useState(false)
@@ -21,10 +20,12 @@ export default function Home() {
     })})
     .then(response =>  {
       response.json().then(data => {
+        let cookie
         if (remind)
-          Cookies.set("user", data["token"], {expires: 100000, sameSite: 'lax'})
+          cookie = Cookies.set("user", data["token"], {expires: 100000, sameSite: 'lax'})
         else
-          Cookies.set("user", data["token"], {sameSite: 'lax'})
+          cookie = Cookies.set("user", data["token"], {sameSite: 'lax'})
+        setUser(cookie)
         
       })
     })
@@ -44,24 +45,41 @@ export default function Home() {
     setRemind(document.getElementById('remind').checked)
   }
   return (
-    <div className="login" onSubmit={handleSubmit}>
-      <form method="POST" className="login-form">
-        <label className="input">
-          <input className="input__field" type="email" id="mail" name="mail" value={email} onChange={handleEmailChange}/>
-          <span className="input__label">Email:</span>
-        </label>
-        <label className="input">
-          <input className="input__field" type="password" id="pwd" name="pwd" value={password} onChange={handlePwdChange} />
-          <span className="input__label">Senha:</span>
-        </label>
-        <label>
-          Lembre-se de mim
-          <input type="checkbox" id="remind" onClick={handleRemindChange}/> 
-        </label>
-        <div className="button-group">
-          <button>Enviar</button>
-        </div>
-      </form>
-    </div>
+    <>
+      {
+        (() => {
+          if (user == undefined) {
+            return (
+              <div className="login" onSubmit={handleSubmit}>
+                <form method="POST" className="login-form">
+                  <label className="input">
+                    <input className="input__field" type="email" id="mail" name="mail" value={email} onChange={handleEmailChange}/>
+                    <span className="input__label">Email:</span>
+                  </label>
+                  <label className="input">
+                    <input className="input__field" type="password" id="pwd" name="pwd" value={password} onChange={handlePwdChange} />
+                    <span className="input__label">Senha:</span>
+                  </label>
+                  <label>
+                    Lembre-se de mim
+                    <input type="checkbox" id="remind" onClick={handleRemindChange}/> 
+                  </label>
+                  <div className="button-group">
+                    <button>Enviar</button>
+                  </div>
+                </form>
+              </div>
+            )
+          }
+          else {
+            return (
+              <div className="welcome">
+                <h1>Bem Vindo!</h1>
+              </div>
+            )
+          }
+        })()
+      }
+    </>
   )
 }

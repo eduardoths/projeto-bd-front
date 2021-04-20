@@ -1,5 +1,28 @@
+import Cookies from 'js-cookie'
 import Link from 'next/link'
-export default function Header(){
+import { useEffect } from 'react'
+function MenuLinks({user, setUser}) {
+    const handleExit = () => {
+        Cookies.remove('user')
+        setUser(Cookies.get('user'))
+    } 
+    if (user === undefined) {
+        return <Link href="/">Home</Link>
+    }
+    else
+        return (
+            <>
+                <Link href="/perfil">Meu perfil</Link>
+                <Link href="/Quadros">Meus Quadros</Link>
+                <a onClick={handleExit}>Log out</a>
+            </>
+        )
+}
+
+export default function Header({user, setUser}){
+    useEffect(() => {
+        console.log("AAAA")
+    },[user])
     return (
         <header>
             <nav className="header-nav">
@@ -7,9 +30,7 @@ export default function Header(){
                     <h2>MyTrello</h2>
                 </Link>
                 <div className="header-nav-menu">
-                    <Link href="/perfil">Meu perfil</Link>
-                    <Link href="/Quadros">Meus Quadros</Link>
-                    <Link href="/exit">Log out</Link>
+                    <MenuLinks user={user} setUser={setUser} />
                 </div>
             </nav>
         </header>

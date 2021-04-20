@@ -10,14 +10,15 @@ function MenuLinks({user, setUser}) {
     if (user === undefined) {
         return <Link href="/">Home</Link>
     }
-    else
+    else {
         return (
             <>
-                <Link href="/perfil">Meu perfil</Link>
+                <Link href="/dashboard">Meu Dashboard</Link>
                 <Link href="/Quadros">Meus Quadros</Link>
                 <a onClick={handleExit}>Log out</a>
             </>
         )
+    }
 }
 
 export default function Header({user, setUser}){

@@ -1,10 +1,11 @@
 import Cookies from 'js-cookie'
 import Link from 'next/link'
-import { useEffect } from 'react'
 function MenuLinks({user, setUser}) {
     const handleExit = () => {
         Cookies.remove('user')
         setUser(Cookies.get('user'))
+        if (window.location.pathname !== "/")
+            window.location.reload()
     } 
     if (user === undefined) {
         return <Link href="/">Home</Link>
@@ -20,9 +21,6 @@ function MenuLinks({user, setUser}) {
 }
 
 export default function Header({user, setUser}){
-    useEffect(() => {
-        console.log("AAAA")
-    },[user])
     return (
         <header>
             <nav className="header-nav">

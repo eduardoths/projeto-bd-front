@@ -69,6 +69,7 @@ footer {
 .header-nav-menu > a {
   padding: 0 10px 0 10px;
   transition: color 1s;
+  cursor: pointer;
 }
 
 .header-nav-menu > a:hover {

@@ -138,6 +138,10 @@ footer {
   flex-direction: column;
 }
 
+.error {
+  flex-direction: column;
+}
+
 .login-form {
   background-color: var(--color-background);
   height: 300px;

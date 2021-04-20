@@ -10,7 +10,7 @@ function Dashboard({data, loading}) {
             <div className="dashboard">
                 <div className="dashboard-teams">
                     <div className="dashboard-section-title">
-                        <p>Minhas equipes</p>
+                        <p>Seus Quadros Pessoais</p>
                     </div>
                     {
                         (() => {
@@ -21,14 +21,18 @@ function Dashboard({data, loading}) {
                                     </div>
                                 )
                             } else {
-                                let teams = Array(data.equipes.length).fill(null)
-                                for (let i=0; i < data.equipes.length; i++) 
-                                    teams[i] = <Team name={data.equipes[i].nome}/>
-                                return (
-                                    <>
-                                        {teams}
-                                    </>
-                                )
+                                if (data.quadros.length != 0){
+                                    const boards_arr = Array(data.quadros.length).fill(null)
+                                    for (let j=0; j < boards_arr.length; j++) {
+                                        const quadro = data.quadros[j]
+                                        boards_arr[j] = <Board key={`board--1-${j}`} name={quadro.nome} id={quadro.id}/>
+                                    }
+                                    const teams = <Team key={`board--1`} name={"Seus Quadros"}>{boards_arr}</Team>
+                                    return (<>{teams}</>)
+                                }
+                                else {
+                                    return (<><p>Sem quadros pessoais</p></>)
+                                }
                             }
                         })()
                     }
@@ -43,7 +47,7 @@ function Dashboard({data, loading}) {
                                     </div>
                                 )
                             } else {
-                                let teams = Array(data.equipes.length+ 1).fill(null)
+                                let teams = Array(data.equipes.length).fill(null)
                                 for (let i=0; i < data.equipes.length; i++) {
                                     const boards_arr = Array(data.equipes[i].quadros.length).fill(null)
                                     for (let j=0; j < boards_arr.length; j++) {
@@ -51,15 +55,7 @@ function Dashboard({data, loading}) {
                                         boards_arr[j] = <Board key={`board-${i}-${j}`}name={quadro.nome} id={quadro.id}/>
                                     }
                                     teams[i] = <Team name={data.equipes[i].nome}>{boards_arr}</Team> 
-                                    console.log(i)
                                 }
-                                const i = data.equipes.length
-                                const boards_arr = Array(data.quadros.length).fill(null)
-                                for (let j=0; j < boards_arr.length; j++) {
-                                    const quadro = data.quadros[j]
-                                    boards_arr[j] = <Board key={`board-${i}-${j}`}name={quadro.nome} id={quadro.id}/>
-                                }
-                                teams[i] = <Team name={"Seus Quadros"}>{boards_arr}</Team>
                                 return (<>{teams}</>)
                             }
                         })()

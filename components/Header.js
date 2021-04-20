@@ -5,7 +5,7 @@ function MenuLinks({user, setUser}) {
         Cookies.remove('user')
         setUser(Cookies.get('user'))
         if (window.location.pathname !== "/")
-            window.location.reload()
+            window.location.href = "/"
     } 
     if (user === undefined) {
         return <Link href="/">Home</Link>
